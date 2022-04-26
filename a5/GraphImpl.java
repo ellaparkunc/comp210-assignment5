@@ -60,6 +60,9 @@ public class GraphImpl implements Graph {
         if (src == null || dest == null) {
             return false;
         }
+        if (!nodes.containsKey(src)|| !nodes.containsKey(dest)) {
+            return false;
+        }
         EdgeImpl toAdd = new EdgeImpl(src, dest, weight);
         //i think i just have to add this edge to the start and ends nodes?
         //from the hashmap nodes, give the node value of the src key
@@ -86,6 +89,9 @@ public class GraphImpl implements Graph {
 
     @Override
     public boolean deleteNode(String name) {
+        if (!nodes.containsKey(name)) {
+            return false;
+        }
         //Hint: Do you need to remove edges when you delete a node?
         //i guess so (cries), but why wouldn't deleting the node delete it for you?
         //oh it deletes all the edges that the node itself is keeping track of
@@ -106,6 +112,9 @@ public class GraphImpl implements Graph {
     @Override
     public boolean deleteEdge(String src, String dest) {
         if (src == null || dest == null) {
+            return false;
+        }
+        if (!nodes.containsKey(src)|| !nodes.containsKey(dest)) {
             return false;
         }
         //must call delEdge on node associated with the key src
