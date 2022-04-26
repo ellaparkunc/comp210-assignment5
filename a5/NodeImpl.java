@@ -8,9 +8,10 @@ import java.util.List;
 public class NodeImpl implements Node {
     String name;
     ArrayList<EdgeImpl> edges; //edges only include those that leave this node.
-    double distance; //from source node to this one by the shortest path
-    boolean visited;
-    Node previous;
+    //any instance variables if not otherwise specified are automatically 'protected' kind of like private except classes can inherit
+    public double distance; //from source node to this one by the shortest path
+    //public boolean visited;
+    //Node previous;
     //1. A way to track the distance from the source node of a shortest path
     //2. A flag to tell if we have already visited this node or not
     //3. previous/adjacent vertex
@@ -44,7 +45,7 @@ public class NodeImpl implements Node {
         this.name = name;
         this.edges = new ArrayList<EdgeImpl>();
         this.distance = 1000000000;
-        this.visited = false;
+        //this.visited = false;
     }
 
     public String getName() {
@@ -104,6 +105,13 @@ public class NodeImpl implements Node {
         }
     }
     ///public void addEdge(String diff) {
+    public double getDist(){
+        return this.distance;
+    }
+
+    public void setDist(double dist){
+        this.distance = dist;
+    }
 
     }
 

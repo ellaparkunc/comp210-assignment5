@@ -27,6 +27,8 @@ public interface Node {
      ArrayList<EdgeImpl> getEdges();
      boolean connected(String diff);
      void delEdge(String diff);
+     public double getDist();
+     public void setDist(double dist);
 
 
 

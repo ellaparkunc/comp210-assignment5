@@ -10,8 +10,8 @@ package a5;
 //5. write numNodes and numEdges [that's just going to include putting a size variable in everything] [for numNodes]
 //6. test that my functions work
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 //w hashmaps, we can do .get, .containsKey, .containsValue,
 // .replace (doesn't do anything if it doesn't exist)
 //.putIfAbsent only updates if it's not already in the map
@@ -127,7 +127,7 @@ public class GraphImpl implements Graph {
 //        EdgeImpl toDel = new EdgeImpl(src, dest, weight);
 //        nodes.get(src).getEdges().remove(toDel);
 //        nodes.get(dest).getEdges().remove(toDel);
-        this.numEdges --;
+        this.numEdges--;
         return true;
     }
 
@@ -154,42 +154,86 @@ public class GraphImpl implements Graph {
     @Override
     public Map<String, Double> dijkstra(String start) {
         //if (start == null) {
-           // return false; WAIT how do i protect against this when we're returning a map??
+        // return false; WAIT how do i protect against this when we're returning a map??
         //}
-        //1. make a list of visited (empty) and unvisited (all nodes)
-        //2. list of each node, shortest distance from A = 0, everything else = infinity or -1
-        //3.  move 1st node from unvisited to visited
-        //4. for current vertex, visit UNVISITED neighbors and calculate distance from vertex
+        //111. make 2 hashmaps (one to return and other visited) and dijkstra's
+        //for dijkstra's you should never need to backtrack.
+        //nodes.get(start).previous = null;
+        //222.check your start node, then the nodes connected to it by the shortest path, mark as visited, update distance relative to INITIAL STARTING NODE
+        //for each edge connected to start node, which is the smallest? mark that as visited and distance = smallest value
+        //double shortest = 0;
+        //String where_shortest = start;
+        //if we have things queued, we can't be certain that our data is paired with its shortest path
+        Comparator<ShortestPathQueueObject> compare = (o1, o2) -> Double.compare(o1.distance, o2.distance);
+        //whole point of priority queue: sorts it based on shortest path to A.
+        //priority queue is only FIFO if two nodes have the same priority
+        PriorityQueue<ShortestPathQueueObject> queue = new PriorityQueue<ShortestPathQueueObject>(compare);
+        HashMap<String, Double> sorted = new HashMap<>();
+        //we don't need a hashmap for this. only need list of visited nodes.
+        ArrayList<String> visited = new ArrayList<>();
+        sorted.put(start, 0.0);
+        //this visited is ONLY for nodes we process from the queue, NOT those we simply see while adjacent to this node.
+        visited.add(start);
+        //we're going to all this trouble bc it will be prioritized for us.
+        ShortestPathQueueObject beginning = new ShortestPathQueueObject(start, 0.0);
+        queue.add(beginning);
+        while (queue.size() != 0) {
+            //take highest priority out of queue
+            //both q.peak & q.poll will get q(0) but poll deletes it from queue
+            ShortestPathQueueObject first = queue.poll();
+            Node recentNode = nodes.get(first.label);
+            if (!visited.contains(first.label)) {
+                //purpose: to put all adjacent nodes in queue w SHORTEST distances
+                visited.add(first.label);
+                for (EdgeImpl e : recentNode.getEdges()) {
+                    //if previous 'shortest path' is longer than the new distance?? to node and weight
+                    double newShortest = recentNode.getDist() + e.weight;
+                    if (nodes.get(e.destination).getDist() > (newShortest)){
+                        nodes.get(e.destination).setDist(newShortest);
+                    }
+                    ShortestPathQueueObject intermediate = new ShortestPathQueueObject(e.destination, nodes.get(e.destination).getDist());
+                    queue.add(intermediate);
+                }
+            }
+            sorted.put(first.label, recentNode.getDist());
+        }
+        return sorted;
+            //333.compare distance
+            //don't put all nodes in initially
+            //only for ranking the priority queue: only use when you're revisiting a node
+            //1. make a list of visited (empty) and unvisited (all nodes)
+            //2. list of each node, shortest distance from A = 0, everything else = infinity or -1
+            //3.  move 1st node from unvisited to visited
+            //4. for current vertex, visit UNVISITED neighbors and calculate distance from vertex
             //aka the weight of the edge
-        //5. if calculated distance is less than 'shortest distance' (which is infitite atm)
+            //5. if calculated distance is less than 'shortest distance' (which is infitite atm)
             //update 'shortest distance to A
-        //6. visit vertex w smallest known distance to A
+            //6. visit vertex w smallest known distance to A
             // (that's not the one you just did or A=0)
-        //7.  move this vertex from unvisited to visited
-        //8. record 'previous vertex'
-        //9. repeat visiting neighbors w this smaller one (probably use helper fn)
+            //7.  move this vertex from unvisited to visited
+            //8. record 'previous vertex'
+            //9. repeat visiting neighbors w this smaller one (probably use helper fn)
             //if this distance < 'shortest distance',
             //shortest dist = this distance plus current node's dist to A
 
 
-        //distance from 1st vertex to itself = 0
-        //dist to all others = infinity
+            //distance from 1st vertex to itself = 0
+            //dist to all others = infinity
 
-        //1. visit unvisited vertex w smallest known dist = current
-        //2. examine all unvisited neighbors of current
+            //1. visit unvisited vertex w smallest known dist = current
+            //2. examine all unvisited neighbors of current
             //& calc distance to each of these, saving shortest dist
-        //3.
-        return null;  //Dummy return value.  Remove when you implement!
+            //3.
 
-    }
-
-    public class ShortestPathQueueObject {
-        public String label;
-        public long distance;
-
-        public ShortestPathQueueObject(String label, long distance) {
-            this.label = label;
-            this.distance = distance;
         }
-    }
+        public class ShortestPathQueueObject {
+            public String label;
+            public double distance;
+
+            public ShortestPathQueueObject(String label, double distance) {
+                this.label = label;
+                this.distance = distance;
+            }
+        }
 }
+
