@@ -174,6 +174,7 @@ public class GraphImpl implements Graph {
         sorted.put(start, 0.0);
         //this visited is ONLY for nodes we process from the queue, NOT those we simply see while adjacent to this node.
         visited.add(start);
+        nodes.get(start).setDist(0.0);
         //we're going to all this trouble bc it will be prioritized for us.
         ShortestPathQueueObject beginning = new ShortestPathQueueObject(start, 0.0);
         queue.add(beginning);
