@@ -6,6 +6,12 @@ the graph however you choose. The graded portion of the assignment will be the G
 The behind the scenes of your graph are not tested, as long as the methods in GraphImpl.java function correctly.
 You are encouraged to create tests in Main.java to test your code. 
 
+Steps for success:
+1. Read everything [check!]
+2. Brainstorm how to implement nodeimpl and edgeimpl [check!]
+3. find slideshows on nodes/edges/dijkstra's 
+4. ask questions ab those [check!]
+
 ## Task: Implement the methods in Graph.java
 These include the following.
 ```

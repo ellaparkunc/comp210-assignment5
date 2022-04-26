@@ -51,6 +51,8 @@ public interface Graph {
      */
     int numEdges();
 
+    public void printer();
+
     /**
      * Runs Dijkstra's algorithm on the graph, starting at the node specified by the start parameter.
      * Return a map where the key is the name of the node and the value is the distance from the start node.

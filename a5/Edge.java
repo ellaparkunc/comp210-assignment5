@@ -1,6 +1,8 @@
 package a5;
 
 public interface Edge {
+    //2.
+
     /* You will include the method signatures (return type, name, and arg types) for any edge methods you
     need in this file. */
 
@@ -9,5 +11,6 @@ public interface Edge {
     previous homeworks (e.g., BST.java and BSTImpl.java in homework 3) are good examples of
     interfaces and their implementations.
      */
+    // an edge already contains the properties String src, String dest, and double weight
 
 }
