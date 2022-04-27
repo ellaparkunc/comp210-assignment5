@@ -198,7 +198,7 @@ public class GraphImpl implements Graph {
         ArrayList<String> visited = new ArrayList<>();
         //sorted.put(start, 0.0);
         //this visited is ONLY for nodes we process from the queue, NOT those we simply see while adjacent to this node.
-        visited.add(start);
+        //visited.add(start);
         nodes.get(start).setDist(0.0);
         //we're going to all this trouble bc it will be prioritized for us.
         ShortestPathQueueObject beginning = new ShortestPathQueueObject(start, 0.0);
@@ -222,6 +222,7 @@ public class GraphImpl implements Graph {
                 }
                 sorted.put(first.label, recentNode.getDist());
             }
+            //maybe sorted has to go here...
         }
         return sorted;
             //333.compare distance
