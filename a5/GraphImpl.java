@@ -195,7 +195,8 @@ public class GraphImpl implements Graph {
         PriorityQueue<ShortestPathQueueObject> queue = new PriorityQueue<ShortestPathQueueObject>(compare);
         HashMap<String, Double> sorted = new HashMap<>();
         //we don't need a hashmap for this. only need list of visited nodes.
-        ArrayList<String> visited = new ArrayList<>();
+        //maybe chance this to HashSet
+        HashSet<String> visited = new HashSet<>();
         //sorted.put(start, 0.0);
         //this visited is ONLY for nodes we process from the queue, NOT those we simply see while adjacent to this node.
         //visited.add(start);
