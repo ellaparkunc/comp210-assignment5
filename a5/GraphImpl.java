@@ -129,6 +129,10 @@ public class GraphImpl implements Graph {
         if (!nodes.containsKey(src)|| !nodes.containsKey(dest)) {
             return false;
         }
+        //Removing an edge that does not exist in the graph should return false
+        if (!nodes.get(src).connected(dest)) {
+            return false;
+        }
         //must call delEdge on node associated with the key src
         Node source = nodes.get(src);
         source.delEdge(dest);
