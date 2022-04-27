@@ -1,4 +1,7 @@
 package a5;
+//1. edge cases
+//2. go through debugger
+
 //BIG QUESTIONS:
 //1. is there a better way to talk about a specific node, say the node that starts @ __ and ends @___ w/o having to do a while loop to get there?
 
@@ -63,6 +66,10 @@ public class GraphImpl implements Graph {
         if (!nodes.containsKey(src)|| !nodes.containsKey(dest)) {
             return false;
         }
+        //addEdge should return false edge already exists between the 2 nodes
+        if (nodes.get(src).connected(dest)) {
+            return false;
+        }
         EdgeImpl toAdd = new EdgeImpl(src, dest, weight);
         //i think i just have to add this edge to the start and ends nodes?
         //from the hashmap nodes, give the node value of the src key
@@ -96,13 +103,18 @@ public class GraphImpl implements Graph {
         //i guess so (cries), but why wouldn't deleting the node delete it for you?
         //oh it deletes all the edges that the node itself is keeping track of
         //but other nodes have memory of the edge so must iterate through THEM
+        ArrayList<EdgeImpl> toDel = new ArrayList<>();
         for (Node n : nodes.values()) {
             //for each edge in the node we will delete,
             for (EdgeImpl e : n.getEdges()) {
                 if (e.destination.equals(name)) {//go to where node to delete is the DESTINATION
-                    deleteEdge(e.source, e.destination);
+                    toDel.add(e);
+                    //deleteEdge(e.source, e.destination);
                 }
             }
+        }
+        for (EdgeImpl e: toDel){
+            deleteEdge(e.source, e.destination);
         }
         nodes.remove(name);
         return true;

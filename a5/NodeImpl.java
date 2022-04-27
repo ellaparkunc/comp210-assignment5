@@ -88,10 +88,12 @@ public class NodeImpl implements Node {
             //how do I subtract something from a list?
             //loop through edges? ask if dest node matches the diff name
             //when you find the correct edge, THAT'S the one you remove
+            //int numRemove = this.edges.size();
+            int toDel = -1;
             for (int i = 0; i < this.edges.size(); i++) {
                 if (edges.get(i).destination.equals(diff)) {
                     //we've found the specific edge we want to delete!
-                    this.getEdges().remove(i);
+                    toDel = i;
                     //todo: remove specific from the 'edge' ArrayList in both this.edges & the value corresponding to diff
                     //QUESTION: how do i talk about the value of the key diff?? they both are in my HashMap
                     //it should be hashmap.get(key)
@@ -102,6 +104,7 @@ public class NodeImpl implements Node {
                     //nodes.get(diff).getEdges().remove(specific);
                 }
             }
+            this.getEdges().remove(toDel);
         }
     }
     ///public void addEdge(String diff) {
