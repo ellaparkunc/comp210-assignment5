@@ -196,7 +196,7 @@ public class GraphImpl implements Graph {
         HashMap<String, Double> sorted = new HashMap<>();
         //we don't need a hashmap for this. only need list of visited nodes.
         ArrayList<String> visited = new ArrayList<>();
-        sorted.put(start, 0.0);
+        //sorted.put(start, 0.0);
         //this visited is ONLY for nodes we process from the queue, NOT those we simply see while adjacent to this node.
         visited.add(start);
         nodes.get(start).setDist(0.0);
@@ -220,8 +220,8 @@ public class GraphImpl implements Graph {
                     ShortestPathQueueObject intermediate = new ShortestPathQueueObject(e.destination, nodes.get(e.destination).getDist());
                     queue.add(intermediate);
                 }
+                sorted.put(first.label, recentNode.getDist());
             }
-            sorted.put(first.label, recentNode.getDist());
         }
         return sorted;
             //333.compare distance
